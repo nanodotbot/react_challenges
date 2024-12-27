@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React challenges</title>
+    <link rel="stylesheet" href="./main.css">
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+
+    <style>
+        body {
+            display: grid;
+            justify-content: center;
+        }
+
+        main {
+            width: 900px;
+            max-width: 96vw;
+        }
+    </style>
+
+    <main>
+
+        <h1>React challenges</h1>
+
+        <section>
+
+            <h2>Introduction</h2>
+
+            <h3>JavaScript</h3>
+
+            <div>
+                <p id="someTextP">cat</p>
+                <label for="someText">Text</label>
+                <input type="text" value="cat" name="someText" id="someText">
+            </div>
+            <script>
+                const someTextP = document.querySelector('#someTextP');
+                const someText = document.querySelector('#someText');                
+
+                someText.oninput = e => {
+                    someTextP.innerText = e.target.value;
+                };
+            </script>
+
+            <pre class="code-block"><code>&lt;div&gt;
+    &lt;p id="someTextP"&gt;cat&lt;/p&gt;
+    &lt;label for="someText"&gt;Text&lt;/label&gt;
+    &lt;input type="text" value="cat" name="someText" id="someText"&gt;
+&lt;/div&gt;
+&lt;script&gt;
+    const someTextP = document.querySelector('#someTextP');
+    const someText = document.querySelector('#someText');                
+
+    someText.oninput = e =&gt; {
+        someTextP.innerText = e.target.value;
+    };
+&lt;/script&gt;</code></pre>
+
+            <h3>React</h3>
+
+            <div id="react-component"></div>
+            <script type="text/babel">
+                const ReactComponent = () => {
+                    const [plainText, setPlainText] = React.useState('meow');
+            
+                    return (
+                        <div>
+                            <p>{ plainText }</p>
+                            <label htmlFor="plain-text">Text</label>
+                            <input type="text" id="plain-text" value={ plainText } onChange={ e => setPlainText(e.target.value) } />
+                        </div>
+                    )
+                }
+                ReactDOM.createRoot(document.querySelector('#react-component')).render(<ReactComponent />);
+            </script>            
+
+            <pre class="code-block"><code>&lt;div id="react-component"&gt;&lt;/div&gt;
+&lt;script type="text/babel"&gt;
+    const ReactComponent = () =&gt; {
+        const [text, setText] = React.useState('meow');
+
+        return (
+            &lt;div&gt;
+                &lt;p&gt;{ text }&lt;/p&gt;
+                &lt;label for="text"&gt;Text&lt;/label&gt;
+                &lt;input type="text" id="text" value={ text } onChange={ e =&gt; setText(e.target.value) } /&gt;
+            &lt;/div&gt;
+        )
+    }
+    ReactDOM.createRoot(document.querySelector('#react-component')).render(&lt;ReactComponent /&gt;);
+&lt;/script&gt;</code></pre>
+
+        </section>
+
+        <section>
+
+            <style>
+                .centered-text {
+                    margin: var(--default-gap) 0;
+                    text-align: center;
+                }
+                pre.hint {
+                    display: none;
+                }
+            </style>
+
+            <h2>Counter</h2>
+
+            <h3>JavaScript</h3>
+
+            <p id="counter" class="centered-text">0</p>
+            <button id="plus-btn">+</button>
+            <button id="minus-btn">-</button>
+
+            <script>
+                let count = 0;
+                const counter = document.querySelector('#counter');
+                const plusBtn = document.querySelector('#plus-btn');
+                const minusBtn = document.querySelector('#minus-btn');
+
+                const setCounter = () => counter.innerText = count;
+                const raiseCount = () => count++;
+                const lowerCount = () => count--;
+
+                plusBtn.onclick = () => {
+                    raiseCount();
+                    setCounter();
+                };
+                minusBtn.onclick = () => {
+                    lowerCount();
+                    setCounter();
+                }
+            </script>
+
+            <button class="hint">Hint C1</button>
+            <pre class="code-block hint"><code>&lt;p id="counter"&gt;0&lt;/p&gt;
+&lt;button id="plus-btn"&gt;+&lt;/button&gt;
+&lt;button id="minus-btn"&gt;-&lt;/button&gt;</code></pre>
+
+            <button class="hint">Hint C2</button>
+            <pre class="code-block hint"><code>let count = 0;
+const counter = document.querySelector('#counter');
+const plusBtn = document.querySelector('#plus-btn');
+const minusBtn = document.querySelector('#minus-btn');</code></pre>
+
+            <button class="hint">Hint C3</button>
+            <pre class="code-block hint"><code>const setCounter = () => counter.innerText = count;
+const raiseCount = () => count++;
+const lowerCount = () => count--;</code></pre>
+
+            <button class="hint">Hint C4</button>
+            <pre class="code-block hint"><code>plusBtn.onclick = () => {
+    raiseCount();
+    setCounter();
+};
+minusBtn.onclick = () => {
+    lowerCount();
+    setCounter();
+}</code></pre>
+
+            <h3>React</h3>
+            
+            <div id="react-counter"></div>
+
+            <script type="text/babel">
+                const ReactCounter = () => {
+                    const [count, setCount] = React.useState(0);
+
+                    return (
+                        <div>
+                            <p className="centered-text"> { count } </p>
+                            <button onClick = { () => setCount(count + 1) }>+</button>
+                            <button onClick = { () => setCount(count - 1) }>-</button>
+                        </div>
+                    )
+                }
+                ReactDOM.createRoot(document.querySelector('#react-counter')).render(<ReactCounter />);
+            </script>
+
+            <button class="hint">Hint C5</button>
+            <pre class="code-block hint"><code>&lt;div id="react-counter"&gt;&lt;/div&gt;</code></pre>
+
+            <button class="hint">Hint C6</button>
+            <pre class="code-block hint"><code>&lt;script type="text/babel"&gt;
+    const ReactCounter = () =&gt; {
+        return (
+            &lt;div&gt;
+                &lt;p className="centered-text"&gt;&lt;/p&gt;
+                &lt;button&gt;+&lt;/button&gt;
+                &lt;button&gt;-&lt;/button&gt;
+            &lt;/div&gt;
+        )
+    }
+    ReactDOM.createRoot(document.querySelector('#react-counter')).render(&lt;ReactCounter /&gt;);
+&lt;/script&gt;</code></pre>
+
+            <button class="hint">Hint C7</button>
+            <pre class="code-block hint"><code>&lt;script type="text/babel"&gt;
+    const ReactCounter = () =&gt; {
+        const [count, setCount] = React.useState(0);
+
+        return (
+            &lt;div&gt;
+                &lt;p className="centered-text"&gt;{count}&lt;/p&gt;
+                &lt;button onClick = { () =&gt; setCount(count + 1) }&gt;+&lt;/button&gt;
+                &lt;button onClick = { () =&gt; setCount(count - 1) }&gt;-&lt;/button&gt;
+            &lt;/div&gt;
+        )
+    }
+    ReactDOM.createRoot(document.querySelector('#react-counter')).render(&lt;ReactCounter /&gt;);
+&lt;/script&gt;</code></pre>
+
+        </section>
+
+        <section>
+
+            <h2>Todo List</h2>
+
+            <h3>JavaScript</h3>
+
+            <div id="todo-list"></div>
+            <form>
+                <label for="add-todo">Add Todo</label>
+                <input type="text" id="add-todo" name="add-todo">
+                <button id="add-todo-btn">Add Todo</button>
+            </form>
+
+            <script>
+                const todos = ['learn', 'chat with gpt'];
+                const todoList = document.querySelector('#todo-list');
+
+                const renderTodos = () => {
+                    todoList.innerHTML = '';
+                    todos.forEach(todo => {
+                        const p = document.createElement('p');
+                        p.innerHTML = todo;
+                        p.classList.add('todo');
+
+                        const button = document.createElement('button');
+                        button.innerText = 'Delete Todo';
+                        button.classList.add('todoBtn');
+
+                        todoList.appendChild(p);
+                        todoList.appendChild(button);
+                    });
+                    const deleteBtns = document.querySelectorAll('.todoBtn');
+
+                    deleteBtns.forEach((deleteBtn, index) => {
+                        deleteBtn.onclick = () => {
+                            todos.splice(index, 1);
+                            renderTodos();
+                        }
+                    });
+                };
+                renderTodos();
+
+                const addTodo = document.querySelector('#add-todo');
+                const addTodoBtn = document.querySelector('#add-todo-btn');
+
+                addTodoBtn.onclick = e => {
+                    e.preventDefault();
+                    todos.push(addTodo.value);
+                    renderTodos();
+                };
+            </script>
+
+            <button class="hint">Hint TL1</button>
+            <pre class="code-block hint"><code>&lt;div id="todo-list"&gt;&lt;/div&gt;
+&lt;form&gt;
+    &lt;label for="add-todo"&gt;Add Todo&lt;/label&gt;
+    &lt;input type="text" id="add-todo" name="add-todo"&gt;
+    &lt;button id="add-todo-btn"&gt;Add Todo&lt;/button&gt;
+&lt;/form&gt;
+
+&lt;script&gt;
+    const todos = ['learn', 'chat with gpt'];
+    const todoList = document.querySelector('#todo-list');
+
+    const renderTodos = () =&gt; {
+        todoList.innerHTML = '';
+        todos.forEach(todo =&gt; {
+            // do something here
+        });
+        const deleteBtns = document.querySelectorAll('.todoBtn');
+
+        deleteBtns.forEach((deleteBtn, index) =&gt; {
+            // do something else here
+        });
+    };
+    renderTodos();
+
+    const addTodo = document.querySelector('#add-todo');
+    const addTodoBtn = document.querySelector('#add-todo-btn');
+
+    addTodoBtn.onclick = e =&gt; {
+        // and do something else here
+    };
+&lt;/script&gt;</code></pre>
+
+            <button class="hint">Hint TL2</button>
+            <pre class="code-block hint"><code>&lt;div id="todo-list"&gt;&lt;/div&gt;
+&lt;form&gt;
+    &lt;label for="add-todo"&gt;Add Todo&lt;/label&gt;
+    &lt;input type="text" id="add-todo" name="add-todo"&gt;
+    &lt;button id="add-todo-btn"&gt;Add Todo&lt;/button&gt;
+&lt;/form&gt;
+
+&lt;script&gt;
+    const todos = ['learn', 'chat with gpt'];
+    const todoList = document.querySelector('#todo-list');
+
+    const renderTodos = () =&gt; {
+        todoList.innerHTML = '';
+        todos.forEach(todo =&gt; {
+            const p = document.createElement('p');
+            p.innerHTML = todo;
+            p.classList.add('todo');
+
+            const button = document.createElement('button');
+            button.innerText = 'Delete Todo';
+            button.classList.add('todoBtn');
+
+            todoList.appendChild(p);
+            todoList.appendChild(button);
+        });
+        const deleteBtns = document.querySelectorAll('.todoBtn');
+
+        deleteBtns.forEach((deleteBtn, index) =&gt; {
+            deleteBtn.onclick = () =&gt; {
+                todos.splice(index, 1);
+                renderTodos();
+            }
+        });
+    };
+    renderTodos();
+
+    const addTodo = document.querySelector('#add-todo');
+    const addTodoBtn = document.querySelector('#add-todo-btn');
+
+    addTodoBtn.onclick = e =&gt; {
+        e.preventDefault();
+        todos.push(addTodo.value);
+        renderTodos();
+    };
+&lt;/script&gt;</code></pre>
+
+            <h3>React</h3>
+
+            <div id="react-todo"></div>
+
+            <script type="text/babel">
+                const ReactTodoList = () => {
+                    const [todoList, setTodoList] = React.useState(['Learn', 'Chat with GPT']);
+                    const [newTodo, setNewTodo] = React.useState('');
+
+                    const addTodo = () => setTodoList( [...todoList, newTodo] );
+                    const removeTodo = index => setTodoList(todoList.filter((todo, i) => i !== index));
+
+                    return (
+                        <div>
+                            <label htmlFor="newTodo">New Todo</label>
+                            <input type="text" id="newTodo" name="newTodo" onChange={ e => setNewTodo(e.target.value) } />
+                            <button onClick={ addTodo }>Add Todo</button>
+                            {
+                                todoList.map((todo, index) => (
+                                    <div key={ index }>
+                                        <p>{ todo }</p>
+                                        <button onClick={ () => removeTodo(index) }>Delete</button>
+                                    </div>
+                                ))
+                            }
+                        </div>
+                    )
+                }
+                ReactDOM.createRoot(document.querySelector('#react-todo')).render(<ReactTodoList />);
+            </script>
+
+            <button class="hint">Hint TL3</button>
+            <pre class="code-block hint"><code>&lt;div id="react-todo"&gt;&lt;/div&gt;
+
+&lt;script type="text/babel"&gt;
+    const ReactTodoList = () =&gt; {
+        const [todoList, setTodoList] = React.useState(['Learn', 'Chat with GPT']);
+        const [newTodo, setNewTodo] = React.useState('');
+
+        const addTodo = () =&gt; // something here;
+        const removeTodo = index =&gt; // something else here;
+
+        return (
+            &lt;div&gt;
+                &lt;label htmlFor="newTodo"&gt;New Todo&lt;/label&gt;
+                &lt;input type="text" id="newTodo" name="newTodo" } /&gt;
+                &lt;button&gt;Add Todo&lt;/button&gt;
+                {
+                    // content here
+                }
+            &lt;/div&gt;
+        )
+    }
+    ReactDOM.createRoot(document.querySelector('#react-todo')).render(&lt;ReactTodoList /&gt;);
+&lt;/script&gt;</code></pre>
+
+            <button class="hint">Hint TL4</button>
+            <pre class="code-block hint"><code>&lt;div id="react-todo"&gt;&lt;/div&gt;
+
+&lt;script type="text/babel"&gt;
+    const ReactTodoList = () =&gt; {
+        const [todoList, setTodoList] = React.useState(['Learn', 'Chat with GPT']);
+        const [newTodo, setNewTodo] = React.useState('');
+
+        const addTodo = () =&gt; setTodoList(  ); // add here
+        const removeTodo = index =&gt; setTodoList( ); // add more here
+
+        return (
+            &lt;div&gt;
+                &lt;label htmlFor="newTodo"&gt;New Todo&lt;/label&gt;
+                &lt;input type="text" id="newTodo" name="newTodo" onChange={ e =&gt;  } /&gt; // fix this
+                &lt;button onClick={ addTodo }&gt;Add Todo&lt;/button&gt;
+                {
+                    todoList.map((todo, index) =&gt; (
+                        &lt;div key={ index }&gt;
+                            &lt;p&gt;{ todo }&lt;/p&gt;
+                            &lt;button onClick={ () =&gt;  }&gt;Delete&lt;/button&gt; // define this here
+                        &lt;/div&gt;
+                    ))
+                }
+            &lt;/div&gt;
+        )
+    }
+    ReactDOM.createRoot(document.querySelector('#react-todo')).render(&lt;ReactTodoList /&gt;);
+&lt;/script&gt;</code></pre>
+
+            <button class="hint">Hint TL5</button>
+            <pre class="code-block hint"><code>&lt;div id="react-todo"&gt;&lt;/div&gt;
+
+&lt;script type="text/babel"&gt;
+    const ReactTodoList = () =&gt; {
+        const [todoList, setTodoList] = React.useState(['Learn', 'Chat with GPT']);
+        const [newTodo, setNewTodo] = React.useState('');
+
+        const addTodo = () =&gt; setTodoList( [...todoList, newTodo] );
+        const removeTodo = index =&gt; setTodoList(todoList.filter((todo, i) =&gt; i !== index));
+
+        return (
+            &lt;div&gt;
+                &lt;label htmlFor="newTodo"&gt;New Todo&lt;/label&gt;
+                &lt;input type="text" id="newTodo" name="newTodo" onChange={ e =&gt; setNewTodo(e.target.value) } /&gt;
+                &lt;button onClick={ addTodo }&gt;Add Todo&lt;/button&gt;
+                {
+                    todoList.map((todo, index) =&gt; (
+                        &lt;div key={ index }&gt;
+                            &lt;p&gt;{ todo }&lt;/p&gt;
+                            &lt;button onClick={ () =&gt; removeTodo(index) }&gt;Delete&lt;/button&gt;
+                        &lt;/div&gt;
+                    ))
+                }
+            &lt;/div&gt;
+        )
+    }
+    ReactDOM.createRoot(document.querySelector('#react-todo')).render(&lt;ReactTodoList /&gt;);
+&lt;/script&gt;</code></pre>
+
+        </section>
+
+    </main>
+
+    <script>
+        const hintBtns = document.querySelectorAll('button.hint');
+        const hints = document.querySelectorAll('pre.hint');
+
+        hintBtns.forEach((hintBtn, index) => {
+            hintBtn.onclick = () => hints[index].classList.toggle('hint');
+        });
+    </script>
+
+</body>
+
+</html>
